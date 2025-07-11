@@ -22,4 +22,6 @@ Se esta desarrollando con Iconos->https://heroicons.com/
     php artisan view:clear  
     php artisan migrate:fresh --seed
 
+Recuerda que estas con el github de Monica.
+
 

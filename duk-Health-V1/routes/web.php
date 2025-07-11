@@ -24,6 +24,7 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'can:usuarios'])->group(function () {
     Volt::route('usuarios', 'usuarios.index')->name('usuarios.index');
     Volt::route('usuarios/create', 'usuarios.create')->name('usuarios.create');
+    Volt::route('usuarios/store', 'usuarios.store')->name('usuarios.store');
     Volt::route('usuarios/{user}/edit', 'usuarios.edit')->name('usuarios.edit');
 });
 
