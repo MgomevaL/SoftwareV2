@@ -14,7 +14,8 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => 'Luis Eduardo Gomez Valencia',
+            'nombres' => 'Luis Eduardo',
+            'apellidos' => 'Gomez Valencia',
             'cargo' => 'Desarrollador',
             'telefono' => '3013716660',
             'email' => 'duk000@hotmail.com',
@@ -22,7 +23,8 @@ class UserSeeder extends Seeder
         ])->assignRole('Dev');
 
         User::create([
-            'name' => 'Luisa Fernanda Varela Valencia',
+            'nombres' => 'Luisa Fernanda',
+            'apellidos' => 'Varela Valencia',
             'cargo' => 'Administrador',
             'telefono' => '3013716661',
             'email' => 'luisa.varela@healthsoft.com.co',
@@ -30,41 +32,46 @@ class UserSeeder extends Seeder
         ])->assignRole('Admin');
 
         User::create([
-            'name' => 'Paola Calderon',
+            'nombres' => 'Paola',
+            'apellidos' => 'Calderon',
             'cargo' => 'Administrador',
-            'telefono' => '3013716661',
+            'telefono' => '3013716662',
             'email' => 'paola.calderon@healthsoft.com.co',
             'password' => Hash::make('Cambiam3'),
         ])->assignRole('Admin');
 
         User::create([
-            'name' => 'Juan Lopez',
+            'nombres' => 'Juan',
+            'apellidos' => 'Lopez',
             'cargo' => 'Administrador',
-            'telefono' => '3013716661',
+            'telefono' => '3013716663',
             'email' => 'juan.lopez@healthsoft.com.co',
             'password' => Hash::make('Cambiam3'),
         ])->assignRole('Admin');
 
         User::create([
-            'name' => 'Johan Suaza',
+            'nombres' => 'Johan',
+            'apellidos' => 'Suaza',
             'cargo' => 'Administrador',
-            'telefono' => '3013716661',
+            'telefono' => '3013716664',
             'email' => 'johan.suaza@healthsoft.com.co',
             'password' => Hash::make('Cambiam3'),
         ])->assignRole('Admin');
 
         User::create([
-            'name' => 'Jenny Alejandra Gomez',
+            'nombres' => 'Jenny Alejandra',
+            'apellidos' => 'Gomez',
             'cargo' => 'Administrador',
-            'telefono' => '3013716661',
+            'telefono' => '3013716665',
             'email' => 'jenny.gomez@healthsoft.com.co',
             'password' => Hash::make('Cambiam3'),
         ])->assignRole('Admin');
 
         User::create([
-            'name' => 'Desarrollador',
+            'nombres' => 'Desarrollador',
+            'apellidos' => 'Junior',
             'cargo' => 'Desarrollador',
-            'telefono' => '3013716661',
+            'telefono' => '3013716666',
             'email' => 'desarrollador@healthsoft.com.co',
             'password' => Hash::make('Cambiam3'),
         ])->assignRole('Cliente');

@@ -28,6 +28,40 @@
     </flux:main>
 
     @fluxScripts
+
+    {{-- Mensajes de Confirmaciones --}}
+    @if (session()->has('success'))
+        <script>
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "{{ session('success') }}",
+                showConfirmButton: false,
+                timer: 3000
+            });
+        </script>
+    @elseif (session()->has('warning'))
+        <script>
+            Swal.fire({
+                position: "center",
+                icon: "warning",
+                title: "{{ session('warning') }}",
+                showConfirmButton: false,
+                timer: 3000
+            });
+        </script>
+    @elseif (session()->has('danger'))
+        <script>
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: "{{ session('danger') }}",
+                showConfirmButton: false,
+                timer: 3000
+            });
+        </script>
+    @endif
+
 </body>
 
 </html>
