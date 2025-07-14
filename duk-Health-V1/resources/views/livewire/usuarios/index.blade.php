@@ -7,6 +7,15 @@ use App\Models\User;
 new class extends Component {
     public $search;
 
+    public function disable($userId)
+    {
+        $user = User::find($userId);
+        if ($user) {
+            $user->estado = 'Inactivo';
+            $user->save();
+        }
+    }
+
     public function with(): array
     {
         return [
@@ -17,7 +26,8 @@ new class extends Component {
                 ->paginate(7),
         ];
     }
-}; ?>
+}
+?>
 
 <div>
     <x-slot name="header">
@@ -82,12 +92,14 @@ new class extends Component {
                                 <p>Sin Rol Asignado</p>
                             @endif
                         </td>
-                        {{-- <td class="px-6 py-3">{{ $user->estado }}</td> --}}
-                        <td><button wire:click="$dispatch('confirmUser', {{ $user->id }})"
-                                class="cursor-pointer inline-block px-3 py-1.5 bg-green-900 text-white rounded-md hover:bg-green-600 transition"
+                        <td>
+                            <button wire:click="$dispatch('confirmUser', {{ $user->id }})"
+                                class="cursor-pointer inline-block px-3 py-1.5 bg-green-900 text-white rounded-md hover:bg-red-600 transition"
                                 title="Desactivar">
                                 {{ $user->estado }}
-                            </button></td>
+                            </button>
+                        </td>
+
                         <td class="px-6 py-3 text-center">
                             <a href="{{ route('usuarios.edit', $user->id) }}"
                                 class="inline-block px-3 py-1.5 bg-amber-600 text-white rounded-md hover:bg-amber-900 transition">
@@ -103,32 +115,33 @@ new class extends Component {
             </div>
         </div>
     @endif
-    
-    {{-- Metodos de Livewire para confirmar la eliminación de un usuario --}}
-    <script>
-        Livewire.on('confirmUser', userId => {
-            Swal.fire({
-                title: "Estas seguro que deseas eliminar este Usuario?",
-                text: "Esta acción no se podra revertir!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "SI!"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Livewire.dispatch('disable', {
-                        userId: userId
-                    });
+
+    <div class="mt-4">
+        <script>
+            document.addEventListener('livewire:init', () => {
+                Livewire.on('confirmUser', (userId) => {
                     Swal.fire({
-                        title: "Eliminado!",
-                        text: "El Usuario sido eliminado correctamente.",
-                        icon: "success"
+                        title: "Estas seguro que deseas eliminar a este Usuario?",
+                        text: "Esta acción no se podra revertir!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "SI!"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            Livewire.dispatch('disable', {
+                                userId: userId
+                            });
+                            Swal.fire({
+                                title: "Eliminado!",
+                                text: "El Usuario sido eliminado correctamente.",
+                                icon: "success"
+                            });
+                        }
                     });
-                }
+
+                });
             });
-        });
-    </script>
-
-
-</div>
+        </script>
+    </div>
