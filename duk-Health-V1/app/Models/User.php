@@ -27,7 +27,7 @@ class User extends Authenticatable
         'password',
         'cargo',
         'estado',
-        
+
     ];
 
     /**
@@ -61,7 +61,13 @@ class User extends Authenticatable
         return Str::of($this->name)
             ->explode(' ')
             ->take(2)
-            ->map(fn ($word) => Str::substr($word, 0, 1))
+            ->map(fn($word) => Str::substr($word, 0, 1))
             ->implode('');
+    }
+
+    public function scopeBuscar($query, $valor)
+    {
+        return $query->where('nombres', 'LIKE', "%$valor%")
+            ->orWhere('email', 'LIKE', "%$valor%");
     }
 }

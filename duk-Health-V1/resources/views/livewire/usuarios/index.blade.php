@@ -1,35 +1,45 @@
 <?php
 
 use Livewire\Volt\Component;
-use Livewire\WithPagination;
 use App\Models\User;
 
 new class extends Component {
     public $search;
 
-    public function disable($userId)
-    {
-        $user = User::find($userId);
-        if ($user) {
-            $user->estado = 'Inactivo';
-            $user->save();
-        }
-    }
+    protected $listeners = ['disable'];
 
     public function with(): array
     {
         return [
-            'users' => User::where(function ($query) {
-                $query->where('nombres', 'LIKE', '%' . $this->search . '%')->orWhere('email', 'LIKE', '%' . $this->search . '%');
-            })
-                ->OrderBy('id', 'desc')
-                ->paginate(7),
+            'users' => User::buscar($this->search)
+            ->where('estado', 'Activo')
+            ->orderBy('id', 'desc')
+            ->paginate(7),
         ];
     }
-}
+
+    public function disable($userId)
+    {
+        $validator = Validator::make(
+            ['id' => $userId],
+            [
+                'id' => 'required|integer|exists:users,id',
+            ],
+        );
+
+        if ($validator->fails()) {
+            session()->flash('danger', 'ID inválido o no existente');
+            return;
+        }
+
+        User::where('id', $userId)->update(['estado' => 'Inactivo']);
+
+        return redirect()->route('usuarios.index')->with('success', 'Usuario desactivado');
+    }
+};
 ?>
 
-<div>
+<div class="px-4 sm:px-6 lg:px-8">
     <x-slot name="header">
         <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">
             {{ __('Lista de Usuarios Registrados.') }}
@@ -37,7 +47,7 @@ new class extends Component {
         <br>
     </x-slot>
 
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
         <div>
             <a href="{{ route('usuarios.create') }}"
                 class="inline-block px-3 py-1.5 bg-green-900 text-white rounded-md hover:bg-green-600 transition">
@@ -61,7 +71,7 @@ new class extends Component {
             <p>No se encontraron registros con los criterios de búsqueda ingresados.</p>
         </div>
     @else
-        <div class="w-full mt-4">
+        <div class="w-full mt-4 overflow-x-auto">
             <x-table>
                 <x-slot name="thead">
                     <tr>
@@ -117,31 +127,30 @@ new class extends Component {
     @endif
 
     <div class="mt-4">
-        <script>
-            document.addEventListener('livewire:init', () => {
-                Livewire.on('confirmUser', (userId) => {
-                    Swal.fire({
-                        title: "Estas seguro que deseas eliminar a este Usuario?",
-                        text: "Esta acción no se podra revertir!",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "SI!"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            Livewire.dispatch('disable', {
-                                userId: userId
-                            });
-                            Swal.fire({
-                                title: "Eliminado!",
-                                text: "El Usuario sido eliminado correctamente.",
-                                icon: "success"
-                            });
-                        }
-                    });
 
-                });
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                if (typeof Livewire !== 'undefined') {
+                    Livewire.on('confirmUser', function(userId) {
+                        Swal.fire({
+                            title: "¿Estás seguro que deseas desactivar al usuario?",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonText: "Sí",
+                            cancelButtonText: "Cancelar"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                Livewire.dispatch('disable', {
+                                    userId: userId
+                                });
+                            }
+                        });
+                    });
+                } else {
+                    console.warn('Livewire no está definido aún. Script de confirmación omitido.');
+                }
             });
         </script>
+
     </div>
+</div>

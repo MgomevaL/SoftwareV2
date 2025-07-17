@@ -1,5 +1,5 @@
 <div class="overflow-x-auto rounded-xl shadow border border-gray-200 dark:border-zinc-700">
-    <table {{ $attributes->merge(['class' => 'min-w-full table-fixed divide-y divide-gray-300 dark:divide-zinc-700'])
+    <table {{ $attributes->merge(['class' => 'table-auto min-w-[900px] w-full divide-y divide-gray-300 dark:divide-zinc-700'])
         }}>
         <thead class="bg-zinc-100 dark:bg-zinc-800 text-gray-700 dark:text-gray-300 uppercase text-xs">
             {{ $thead ?? '' }}

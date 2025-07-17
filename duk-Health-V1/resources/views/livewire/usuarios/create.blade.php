@@ -11,7 +11,7 @@ new class extends Component {
         return [
             'nombres' => 'required|string|max:255',
             'apellidos' => 'required|string|max:255',
-            'telefono' => 'required|string|max:15|unique:users,telefono',
+            'telefono' => ['required', 'regex:/^3\d{9}$/', 'unique:users,telefono'],
             'cargo' => 'required|string|max:100',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed',

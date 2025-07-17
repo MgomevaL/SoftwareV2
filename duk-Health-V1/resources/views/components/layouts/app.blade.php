@@ -21,9 +21,13 @@
         @endisset
 
         @isset($content)
-            {{ $content }}
+            <div>
+                {{ $content }}
+            </div>
         @else
-            {{ $slot }}
+            <div>
+                {{ $slot }}
+            </div>
         @endisset
     </flux:main>
 
@@ -61,7 +65,6 @@
             });
         </script>
     @endif
-
 </body>
 
 </html>
