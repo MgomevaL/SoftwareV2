@@ -2,21 +2,14 @@
 
 use Livewire\Volt\Component;
 use App\Models\User;
+use App\Http\Requests\CrearUsuarioRequest;
 
 new class extends Component {
     public $nombres, $apellidos, $telefono, $cargo, $email, $password, $password_confirmation;
 
     public function rules(): array
     {
-        return [
-            'nombres' => 'required|string|max:255',
-            'apellidos' => 'required|string|max:255',
-            'telefono' => ['required', 'regex:/^3\d{9}$/', 'unique:users,telefono'],
-            'cargo' => 'required|string|max:100',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
-            'password_confirmation' => 'required|string|min:8',
-        ];
+        return (new CrearUsuarioRequest())->rules();
     }
 
     public function createUser()
@@ -47,7 +40,6 @@ new class extends Component {
     <div class="max-w-2xl mx-auto p-6 bg-white dark:bg-zinc-900 rounded-lg shadow-md">
         <form wire:submit.prevent='createUser' enctype="multipart/form-data">
             @csrf
-
             <div class="grid grid-cols-2 gap-4">
                 <!-- Campo de Nombres con validación y mensaje de error -->
                 <div class="mb-4">

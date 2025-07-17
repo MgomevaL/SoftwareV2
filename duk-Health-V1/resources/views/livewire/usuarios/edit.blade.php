@@ -9,18 +9,39 @@ new class extends Component {
     public $roles;
     public $selectedRoles = [];
 
+    public $nombres, $apellidos, $telefono, $email;
+
     public function mount(User $user)
     {
         $this->user = $user;
         $this->selectedRoles = $this->user->roles->pluck('id')->toArray();
+
+        $this->nombres = $user->nombres;
+        $this->apellidos = $user->apellidos;
+        $this->telefono = $user->telefono;
+        $this->email = $user->email;
     }
 
-    public function updateRoles()
+    public function actualizarUsuario()
     {
-        $this->user->roles()->detach(); // Elimina todos los roles del usuario (para evitar duplicados
-        $this->user->roles()->attach($this->selectedRoles);
+        $this->validate([
+            'nombres' => 'required|string|max:255',
+            'apellidos' => 'required|string|max:255',
+            'telefono' => 'required|string|max:15',
+            'email' => 'required|email',
+        ]);
 
-        return redirect()->route('usuarios.index')->with('success', 'Los roles se actualizaron con éxito');
+        $this->user->update([
+            'nombres' => $this->nombres,
+            'apellidos' => $this->apellidos,
+            'telefono' => $this->telefono,
+            'email' => $this->email,
+        ]);
+
+        $this->user->roles()->sync($this->selectedRoles);
+
+        return redirect()->route('usuarios.index')->with('success', 'Usuario actualizado exitosamente');
+
     }
 
     public function render(): mixed
@@ -30,53 +51,73 @@ new class extends Component {
     }
 }; ?>
 
-<div>
-    <x-card>
-        {{-- Título centrado con mejor estilo --}}
-        <x-slot:titleCard>
-            <div class="text-center mb-6">
-                <h2 class="text-2xl font-bold text-zinc-800 dark:text-white">
-                    Asignar Roles al Usuario:
-                    <span class="font-medium text-blue-600 dark:text-blue-400">{{ $user->name }}</span>
-                </h2>
-                <hr class="my-4 border-gray-200 dark:border-zinc-700">
-            </div>
-        </x-slot:titleCard>
+<div class="max-w-3xl mx-auto p-6 bg-white dark:bg-zinc-900 rounded-lg shadow-lg space-y-6">
+    <h2 class="text-2xl font-bold text-center text-zinc-800 dark:text-white">Editar Usuario</h2>
+    <hr class="border-gray-300 dark:border-zinc-700">
 
-        {{-- Cuerpo del card --}}
-        <x-slot:bodyCard>
-            <form wire:submit.prevent="updateRoles" class="space-y-4">
-                <h4 class="text-lg font-semibold text-zinc-700 dark:text-zinc-200">Lista de Roles</h4>
-                <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    @foreach ($roles as $role)
-                        <label
-                            class="flex items-center space-x-2 p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-700 transition">
-                            <input wire:model="selectedRoles" type="checkbox" value="{{ $role->id }}"
-                                class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 dark:bg-zinc-800 dark:border-zinc-600">
-                            <span class="text-zinc-800 dark:text-zinc-100">
-                                {{ $role->name }}
-                                @if (in_array($role->id, $selectedRoles))
-                                    <span class="text-sm text-gray-500 dark:text-gray-400">(Actual)</span>
-                                @endif
-                            </span>
-                        </label>
-                    @endforeach
-                </div>
-                <hr class="my-4 border-gray-200 dark:border-zinc-700">
-                <div class="grid grid-cols-3 gap-4">
-                    <div>
-                        <x-button type="submit">
-                            Guardar cambios
-                        </x-button>
-                    </div>
-                    <div></div>
-                    <div>
-                        <x-button variant="success" href="{{ route('usuarios.index') }}">
-                            Regresar
-                        </x-button>
-                    </div>
-                </div>
-            </form>
-        </x-slot:bodyCard>
-    </x-card>
+    <form wire:submit.prevent="actualizarUsuario">
+        <h3 class="text-lg font-semibold text-zinc-700 dark:text-zinc-200 mb-4">Datos Personales</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label for="nombres" class="block text-sm text-gray-700 dark:text-gray-300">Nombres</label>
+                <input wire:model="nombres" placeholder="{{ $user->nombres }}"
+                    class="w-full px-4 py-2 border rounded-md dark:bg-zinc-800 dark:text-white">
+                @error('nombres')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div>
+                <label for="apellidos" class="block text-sm text-gray-700 dark:text-gray-300">Apellidos</label>
+                <input wire:model="apellidos" placeholder="{{ $user->apellidos }}"
+                    class="w-full px-4 py-2 border rounded-md dark:bg-zinc-800 dark:text-white">
+                @error('apellidos')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <div>
+                <label for="telefono" class="block text-sm text-gray-700 dark:text-gray-300">Teléfono</label>
+                <input wire:model="telefono" placeholder="{{ $user->telefono }}"
+                    class="w-full px-4 py-2 border rounded-md dark:bg-zinc-800 dark:text-white">
+                @error('telefono')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div>
+                <label for="email" class="block text-sm text-gray-700 dark:text-gray-300">Correo</label>
+                <input wire:model="email" placeholder="{{ $user->email }}"
+                    class="w-full px-4 py-2 border rounded-md dark:bg-zinc-800 dark:text-white">
+                @error('email')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+
+        <hr class="my-6 border-gray-300 dark:border-zinc-700">
+
+        <h3 class="text-lg font-semibold text-zinc-700 dark:text-zinc-200 mb-4">Asignar Roles</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            @foreach ($roles as $role)
+                <label class="flex items-center space-x-2 p-2 rounded hover:bg-zinc-100 dark:hover:bg-zinc-700">
+                    <input type="checkbox" wire:model="selectedRoles" value="{{ $role->id }}"
+                        class="h-4 w-4 text-blue-600 border-gray-300 rounded dark:bg-zinc-800 dark:border-zinc-600">
+                    <span class="text-gray-800 dark:text-gray-100">
+                        {{ $role->name }}
+                        @if (in_array($role->id, $selectedRoles))
+                            <span class="text-xs text-gray-500 dark:text-gray-400">(Asignado)</span>
+                        @endif
+                    </span>
+                </label>
+            @endforeach
+        </div>
+
+        <div class="mt-6 flex justify-between">
+            <x-button type="submit" variant="primary">Actualizar Usuario</x-button>
+            <x-button href="{{ route('usuarios.index') }}" variant="success">Regresar</x-button>
+        </div>
+    </form>
 </div>

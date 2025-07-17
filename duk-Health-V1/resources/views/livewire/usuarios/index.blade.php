@@ -11,10 +11,7 @@ new class extends Component {
     public function with(): array
     {
         return [
-            'users' => User::buscar($this->search)
-            ->where('estado', 'Activo')
-            ->orderBy('id', 'desc')
-            ->paginate(7),
+            'users' => User::buscar($this->search)->where('estado', 'Activo')->orderBy('id', 'desc')->paginate(7),
         ];
     }
 
@@ -75,7 +72,7 @@ new class extends Component {
             <x-table>
                 <x-slot name="thead">
                     <tr>
-                        <th class="px-6 py-3 text-left">ID</th>
+                        {{-- <th class="px-6 py-3 text-left">ID</th> --}}
                         <th class="px-6 py-3 text-left">Nombre</th>
                         <th class="px-6 py-3 text-left">Correo</th>
                         <th class="px-6 py-3 text-left">Contacto</th>
@@ -88,7 +85,7 @@ new class extends Component {
 
                 @foreach ($users as $user)
                     <tr class="hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">
-                        <td class="px-6 py-3">{{ $user->id }}</td>
+                        {{-- <td class="px-6 py-3">{{ $user->id }}</td> --}}
                         <td class="px-6 py-3 font-medium">{{ $user->nombres }} {{ $user->apellidos }}</td>
                         <td class="px-6 py-3">{{ $user->email }}</td>
                         <td class="px-6 py-3">{{ $user->telefono }}</td>
