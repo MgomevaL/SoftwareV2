@@ -38,7 +38,7 @@ new class extends Component {
 
 <div class="px-4 sm:px-6 lg:px-8">
     <x-slot name="header">
-        <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">
+        <h1 class="text-2xl text-center font-semibold text-gray-900 dark:text-white">
             {{ __('Lista de Usuarios Registrados.') }}
         </h1>
         <br>
@@ -99,7 +99,7 @@ new class extends Component {
                                 <p>Sin Rol Asignado</p>
                             @endif
                         </td>
-                        <td>
+                        <td class="px-6 py-3 text-left">
                             <button wire:click="$dispatch('confirmUser', {{ $user->id }})"
                                 class="cursor-pointer inline-block px-3 py-1.5 bg-green-900 text-white rounded-md hover:bg-red-600 transition"
                                 title="Desactivar">

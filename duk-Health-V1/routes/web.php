@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Validation\Rules\Can;
 use Livewire\Volt\Volt;
+
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,6 +27,14 @@ Route::middleware(['auth', 'can:usuarios'])->group(function () {
     Volt::route('usuarios/create', 'usuarios.create')->name('usuarios.create');
     Volt::route('usuarios/store', 'usuarios.store')->name('usuarios.store');
     Volt::route('usuarios/{user}/edit', 'usuarios.edit')->name('usuarios.edit');
+});
+
+// Gestion de Especialistas
+Route::middleware(['auth', 'can:especialistas'])->group(function () {
+    Volt::route('especialistas', 'especialistas.index')->name('especialistas.index');
+    Volt::route('especialistas/create', 'especialistas.create')->name('especialistas.create');
+    Volt::route('especialistas/store', 'especialistas.store')->name('especialistas.store');
+    Volt::route('especialistas/{user}/edit', 'especialistas.edit')->name('especialistas.edit');
 });
 
 

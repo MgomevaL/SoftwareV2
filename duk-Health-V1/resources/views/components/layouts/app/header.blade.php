@@ -4,21 +4,27 @@
     <flux:navbar class="-mb-px max-lg:hidden">
         <flux:navbar.item icon="home" href="#" current>AdminPanel</flux:navbar.item>
         <flux:navbar.item icon="inbox" badge="12" href="#">Buzon de Correo</flux:navbar.item>
-        <flux:navbar.item icon="document-text" href="#">Almacenamiento</flux:navbar.item>
         <flux:navbar.item icon="calendar" href="#">Calendario</flux:navbar.item>
         <flux:separator vertical variant="subtle" class="my-2" />
-        <flux:dropdown class="max-lg:hidden">
-            <flux:navbar.item icon:trailing="chevron-down">Favoritos</flux:navbar.item>
-            <flux:navmenu>
-                <flux:navmenu.item href="#">Marketing site</flux:navmenu.item>
-                <flux:navmenu.item href="#">Android app</flux:navmenu.item>
-                <flux:navmenu.item href="#">Brand guidelines</flux:navmenu.item>
-            </flux:navmenu>
-        </flux:dropdown>
-        {{-- usuarios --}}
         @role(['Dev', 'Admin'])
+            <flux:dropdown class="max-lg:hidden">
+                <flux:navbar.item icon:trailing="chevron-down">Favoritos</flux:navbar.item>
+                <flux:navmenu>
+                    <flux:navmenu.item href="#">Marketing site</flux:navmenu.item>
+                    <flux:navmenu.item href="#">Android app</flux:navmenu.item>
+                    <flux:navmenu.item href="#">Brand guidelines</flux:navmenu.item>
+                </flux:navmenu>
+            </flux:dropdown>
+
+            {{-- Especialistas --}}
+            <flux:navbar.item icon="user-group" href="{{ route('especialistas.index') }}" label="Especialistas"
+                badge="{{ \App\Models\Especialista::count() }}" title="Gestion de especialistas Registrados">Especialistas
+            </flux:navbar.item>
+
+            {{-- usuarios --}}
             <flux:navbar.item icon="users" href="{{ route('usuarios.index') }}" label="Usuarios"
-            badge="{{ auth()->user()->count() }}" title="Gestion de Usuarios Registrados">Usuarios</flux:navbar.item>
+                badge="{{ \App\Models\User::count() }}" title="Gestion de Usuarios Registrados">Usuarios
+            </flux:navbar.item>
         @endrole
 
     </flux:navbar>
@@ -29,9 +35,10 @@
     </flux:navbar>
 
     {{-- Modo Oscuro --}}
-    <flux:navbar class="me-4"
-        x-data="{ dark: localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches) }"
-        x-init="$watch('dark', val => { localStorage.theme = val ? 'dark' : 'light'; document.documentElement.classList.toggle('dark', val) })">
+    <flux:navbar class="me-4" x-data="{ dark: localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches) }" x-init="$watch('dark', val => {
+        localStorage.theme = val ? 'dark' : 'light';
+        document.documentElement.classList.toggle('dark', val)
+    })">
 
         <button @click="dark = !dark" class="rounded-full p-2 hover:bg-zinc-200 dark:hover:bg-zinc-700 max-lg:hidden"
             :title="dark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'">
@@ -66,7 +73,8 @@
                         </span>
 
                         <div class="grid flex-1 text-start text-sm leading-tight">
-                            <span class="truncate font-semibold">{{ auth()->user()->nombres . ' ' . auth()->user()->apellidos }}</span>
+                            <span
+                                class="truncate font-semibold">{{ auth()->user()->nombres . ' ' . auth()->user()->apellidos }}</span>
                             <span class="truncate text-xs">{{ auth()->user()->cargo }}</span>
                         </div>
                     </div>

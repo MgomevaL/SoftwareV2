@@ -62,7 +62,7 @@
 
                             
                             <span class="text-[#706f6c] dark:text-[#5df076]">
-                                Autenticación y Autorización.
+                                Funcionalidad 1: Autenticación y Autorización.
                             </span>
                         </li>
 
@@ -72,8 +72,8 @@
                                     <span class="rounded-full bg-[#dbdbd7] dark:bg-[#3E3E3A] w-1.5 h-1.5"></span>
                                 </span>
                             </span>
-                            <span>
-                                <marquee loop="3">Funcionalidad 2: Modulo de Acceso y Registro para Acceder a la APPWEB.</marquee>
+                            <span class="text-[#706f6c] dark:text-[#5df076]">
+                                Funcionalidad 2: Modulo de Acceso y Registro para ingresar a la AppWeb.
                             </span>
                         </li>
                         <li class="flex items-center gap-4 py-2 relative before:border-l before:border-[#e3e3e0] dark:before:border-[#3E3E3A] before:bottom-1/2 before:top-0 before:start-[0.4rem] before:absolute">
@@ -83,7 +83,7 @@
                                 </span>
                             </span>
                             <span>
-                                Funcionalidad 3: Plantilla AdminLTE para la APPWEB.
+                                <marquee loop="3">Funcionalidad 3: Modulo Medicos & Pacientes..</marquee>
                             </span>
                         </li>
                         <li class="flex items-center gap-4 py-2 relative before:border-l before:border-[#e3e3e0] dark:before:border-[#3E3E3A] before:bottom-1/2 before:top-0 before:start-[0.4rem] before:absolute">
@@ -93,7 +93,7 @@
                                 </span>
                             </span>
                             <span>
-                                Funcionalidad 4: Modulo Medicos & Pacientes. -Funcionalidad 5: Agendamiento -> En Desarrollo.
+                                Funcionalidad 4: Agendamiento
                             </span>
                         </li>
                         <li class="flex items-center gap-4 py-2 relative before:border-l before:border-[#e3e3e0] dark:before:border-[#3E3E3A] before:bottom-1/2 before:top-0 before:start-[0.4rem] before:absolute">
@@ -124,7 +124,7 @@
                                 </span>
                             </span>
                             <span>
-                                Funcionalidad 1: Pagina web de la IPS.
+                                Funcionalidad 8: Pagina web de la IPS.
                             </span>
                         </li>
                     </ul>

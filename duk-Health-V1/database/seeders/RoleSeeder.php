@@ -28,16 +28,19 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'usuarios.create'])->syncRoles([$role_admin, $role_dev]);
         Permission::create(['name' => 'usuarios.edit'])->syncRoles([$role_admin, $role_dev]);
         Permission::create(['name' => 'usuarios.delete'])->syncRoles([$role_admin, $role_dev]);
+        
         // // Pacientes
         // Permission::create(['name' => 'admin.pacientes.index'])->syncRoles([$role_admin, $role_sac, $role_dev]);
         // Permission::create(['name' => 'admin.pacientes.create'])->syncRoles([$role_admin, $role_sac, $role_dev]);
         // Permission::create(['name' => 'admin.pacientes.edit'])->syncRoles([$role_admin, $role_sac, $role_dev]);
         // Permission::create(['name' => 'admin.pacientes.delete'])->syncRoles([$role_admin, $role_sac, $role_dev]);
-        // // Especialistas
-        // Permission::create(['name' => 'admin.especialistas.index'])->syncRoles([$role_admin, $role_dev]);
-        // Permission::create(['name' => 'admin.especialistas.create'])->syncRoles([$role_admin, $role_dev]);
-        // Permission::create(['name' => 'admin.especialistas.edit'])->syncRoles([$role_admin, $role_dev]);
-        // Permission::create(['name' => 'admin.especialistas.delete'])->syncRoles([$role_admin, $role_dev]);
+
+        // Especialistas
+        Permission::create(['name' => 'especialistas'])->syncRoles([$role_admin, $role_dev]);
+        Permission::create(['name' => 'especialistas.index'])->syncRoles([$role_admin, $role_dev]);
+        Permission::create(['name' => 'especialistas.create'])->syncRoles([$role_admin, $role_dev]);
+        Permission::create(['name' => 'especialistas.edit'])->syncRoles([$role_admin, $role_dev]);
+        Permission::create(['name' => 'especialistas.delete'])->syncRoles([$role_admin, $role_dev]);
 
 
     }
