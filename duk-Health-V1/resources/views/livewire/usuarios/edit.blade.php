@@ -41,7 +41,6 @@ new class extends Component {
         $this->user->roles()->sync($this->selectedRoles);
 
         return redirect()->route('usuarios.index')->with('success', 'Usuario actualizado exitosamente');
-
     }
 
     public function render(): mixed
@@ -58,48 +57,19 @@ new class extends Component {
     <form wire:submit.prevent="actualizarUsuario">
         <h3 class="text-lg font-semibold text-zinc-700 dark:text-zinc-200 mb-4">Datos Personales</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-                <label for="nombres" class="block text-sm text-gray-700 dark:text-gray-300">Nombres</label>
-                <input wire:model="nombres" placeholder="{{ $user->nombres }}"
-                    class="w-full px-4 py-2 border rounded-md dark:bg-zinc-800 dark:text-white">
-                @error('nombres')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
-            </div>
+            <x-input-field name="nombres" label="Nombres" type="text" model="nombres" />
 
-            <div>
-                <label for="apellidos" class="block text-sm text-gray-700 dark:text-gray-300">Apellidos</label>
-                <input wire:model="apellidos" placeholder="{{ $user->apellidos }}"
-                    class="w-full px-4 py-2 border rounded-md dark:bg-zinc-800 dark:text-white">
-                @error('apellidos')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
-            </div>
-        </div>
+            <x-input-field name="apellidos" label="Apellidos" type="text" model="apellidos" />
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            <div>
-                <label for="telefono" class="block text-sm text-gray-700 dark:text-gray-300">Teléfono</label>
-                <input wire:model="telefono" placeholder="{{ $user->telefono }}"
-                    class="w-full px-4 py-2 border rounded-md dark:bg-zinc-800 dark:text-white">
-                @error('telefono')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
-            </div>
+            <x-input-field name="telefono" label="Teléfono" type="text" model="telefono" />
 
-            <div>
-                <label for="email" class="block text-sm text-gray-700 dark:text-gray-300">Correo</label>
-                <input wire:model="email" placeholder="{{ $user->email }}"
-                    class="w-full px-4 py-2 border rounded-md dark:bg-zinc-800 dark:text-white">
-                @error('email')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
-            </div>
+            <x-input-field name="email" label="Email" type="email" model="email" />
         </div>
 
         <hr class="my-6 border-gray-300 dark:border-zinc-700">
 
         <h3 class="text-lg font-semibold text-zinc-700 dark:text-zinc-200 mb-4">Asignar Roles</h3>
+
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             @foreach ($roles as $role)
                 <label class="flex items-center space-x-2 p-2 rounded hover:bg-zinc-100 dark:hover:bg-zinc-700">
@@ -117,7 +87,7 @@ new class extends Component {
 
         <div class="mt-6 flex justify-between">
             <x-button type="submit" variant="primary">Actualizar Usuario</x-button>
-            <x-button href="{{ route('usuarios.index') }}" variant="success">Regresar</x-button>
+            <x-button href="{{ route('usuarios.index') }}" variant="secondary">Regresar</x-button>
         </div>
     </form>
 </div>
