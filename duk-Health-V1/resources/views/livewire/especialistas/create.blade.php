@@ -9,7 +9,7 @@ new class extends Component {
 
     public function rules(): array
     {
-        return new EspecialistaRequest()->rules();
+        return (new EspecialistaRequest())->rules();
     }
 
     public function crearEspecialista()
@@ -124,7 +124,7 @@ new class extends Component {
             </div>
 
             <!-- Botón -->
-            <x-action-button label="Crear Especialista" />
+            <x-action-button label="Crear Especialista" variant="success" />
         </form>
     </div>
 </div>

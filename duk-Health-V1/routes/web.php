@@ -34,7 +34,7 @@ Route::middleware(['auth', 'can:especialistas'])->group(function () {
     Volt::route('especialistas', 'especialistas.index')->name('especialistas.index');
     Volt::route('especialistas/create', 'especialistas.create')->name('especialistas.create');
     Volt::route('especialistas/store', 'especialistas.store')->name('especialistas.store');
-    Volt::route('especialistas/{user}/edit', 'especialistas.edit')->name('especialistas.edit');
+    Volt::route('especialistas/{especialista}/edit', 'especialistas.edit')->name('especialistas.edit');
 });
 
 

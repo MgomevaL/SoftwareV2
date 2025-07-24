@@ -8,22 +8,33 @@ use Illuminate\View\Component;
 
 class ActionButton extends Component
 {
-    public string $label;
-    public string $type;
-    public string $color;
+ public $label;
+    public $type;
+    public $variant;
+    public $disabled;
+    public $icon;
+    public $loading;
+
 
     /**
      * Create a new component instance.
      */
     public function __construct(
-        string $label = 'Crear',
-        string $type = 'submit',
-        string $color = 'green'
+       $label = 'Enviar',
+        $type = 'submit',
+        $variant = 'primary',
+        $disabled = false,
+        $icon = null,
+        $loading = true,
+
 
     ) {
-        $this->label = $label;
+       $this->label = $label;
         $this->type = $type;
-        $this->color = $color;
+        $this->variant = $variant;
+        $this->disabled = $disabled;
+        $this->icon = $icon;
+        $this->loading = $loading;
 
     }
 

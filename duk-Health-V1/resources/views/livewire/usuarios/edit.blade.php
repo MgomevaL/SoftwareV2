@@ -5,6 +5,7 @@ use App\Models\User;
 use Spatie\Permission\Models\Role;
 
 new class extends Component {
+    
     public $user;
     public $roles;
     public $selectedRoles = [];

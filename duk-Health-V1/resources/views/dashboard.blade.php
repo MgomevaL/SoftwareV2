@@ -17,25 +17,6 @@
                 {{ __('Aprendiendo Tailwind CSS 4') }}
             </p>
         </div>
-
-        <div>
-            {{-- botones --}}
-            <x-button type="button" variant="primary" size="md">
-                {{ __('Agregar Usuario') }}
-            </x-button>
-
-            <x-button type="button" variant="secondary" size="md">
-                {{ __('Ver Usuarios') }}
-            </x-button>
-            
-            <x-button type="button" variant="danger" size="md">
-                {{ __('Eliminar Usuario') }}
-            </x-button>   
-        </div>
-
-
-
-
     </x-slot>
 
 </x-layouts.app>

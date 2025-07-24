@@ -5,7 +5,7 @@ use App\Models\Especialista;
 
 new class extends Component {
     public $search;
-       protected $listeners = ['disable'];
+    protected $listeners = ['disable'];
 
     public function with(): array
     {
@@ -67,7 +67,7 @@ new class extends Component {
                         {{-- <th class="px-6 py-3 text-left">Fotografía</th> --}}
                         {{-- <th class="px-6 py-3 text-left">Dirección de Residencia</th> --}}
                         <th class="px-6 py-3 text-left">Telefono Contacto</th>
-                        <th class="px-6 py-3 text-left">Telefono Contacto 2</th>
+                        {{-- <th class="px-6 py-3 text-left">Telefono Contacto 2</th> --}}
                         <th class="px-6 py-3 text-left">Correo Electronico</th>
                         <th class="px-6 py-3 text-left">Especialidad médica</th>
                         {{-- <th class="px-6 py-3 text-left">Registro Médico</th> --}}
@@ -82,14 +82,16 @@ new class extends Component {
                 @foreach ($especialistas as $especialista)
                     <tr class="hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">
                         {{-- <td class="px-6 py-3">{{ $especialista->id }}</td> --}}
-                        <td class="px-6 py-3 text-left">{{ $especialista->nombres . ' ' . $especialista->apellidos }}</td>
-                        <td class="px-6 py-3 text-left">{{ $especialista->tipo_identificacion . ' # ' . $especialista->numero_identificacion }}</td>
+                        <td class="px-6 py-3 text-left">{{ $especialista->nombres . ' ' . $especialista->apellidos }}
+                        </td>
+                        <td class="px-6 py-3 text-left">
+                            {{ $especialista->tipo_identificacion . ' # ' . $especialista->numero_identificacion }}</td>
                         <td class="px-6 py-3 text-left">{{ $especialista->genero }}</td>
                         {{-- <td>{{ $especialista->fecha_de_nacimiento }}</td>
                         <td>{{ Str::limit($especialista->path_fotografia, 20) }}</td>
                         <td>{{ Str::limit($especialista->direccion_residencia, 20) }}</td> --}}
                         <td class="px-6 py-3 text-left">{{ $especialista->telefono_contacto1 }}</td>
-                        <td class="px-6 py-3 text-left">{{ $especialista->telefono_contacto2 }}</td>
+                        {{-- <td class="px-6 py-3 text-left">{{ $especialista->telefono_contacto2 }}</td> --}}
                         <td class="px-6 py-3 text-left">{{ $especialista->email }}</td>
                         <td class="px-6 py-3 text-left">{{ $especialista->especialidad_medica }}</td>
                         {{-- <td>{{ $especialista->registro_medico }}</td> --}}
@@ -119,31 +121,28 @@ new class extends Component {
         </div>
     @endif
 
-    <div class="mt-4">
-
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                if (typeof Livewire !== 'undefined') {
-                    Livewire.on('confirmespecialista', function(especialistaId) {
-                        Swal.fire({
-                            title: "¿Estás seguro que deseas desactivar al Especialista?",
-                            icon: "warning",
-                            showCancelButton: true,
-                            confirmButtonText: "Sí",
-                            cancelButtonText: "Cancelar"
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                Livewire.dispatch('disable', {
-                                    especialistaId: especialistaId
-                                });
-                            }
-                        });
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof Livewire !== 'undefined') {
+                Livewire.on('confirmespecialista', function(especialistaId) {
+                    Swal.fire({
+                        title: "¿Estás seguro que deseas desactivar al Especialista?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "Sí",
+                        cancelButtonText: "Cancelar"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            Livewire.dispatch('disable', {
+                                especialistaId: especialistaId
+                            });
+                        }
                     });
-                } else {
-                    console.warn('Livewire no está definido aún. Script de confirmación omitido.');
-                }
-            });
-        </script>
+                });
+            } else {
+                console.warn('Livewire no está definido aún. Script de confirmación omitido.');
+            }
+        });
+    </script>
 
-    </div>
 </div>

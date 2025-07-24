@@ -9,7 +9,7 @@ new class extends Component {
 
     public function rules(): array
     {
-        return new UsuarioRequest()->rules();
+        return (new UsuarioRequest())->rules();
     }
 
     public function createUser()
@@ -57,10 +57,8 @@ new class extends Component {
                 <x-input-field name="password_confirmation" label="Confirmar Contraseña" type="password"
                     model="password_confirmation" />
             </div>
-            <div class="mt-6 flex justify-center">
-                <!-- Botón -->
-                <x-action-button label="Crear Usuario" />
-            </div>
+
+            <x-action-button label="Crear Usuario" variant="success"/>
         </form>
     </div>
 </div>
