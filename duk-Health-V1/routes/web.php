@@ -37,5 +37,13 @@ Route::middleware(['auth', 'can:especialistas'])->group(function () {
     Volt::route('especialistas/{especialista}/edit', 'especialistas.edit')->name('especialistas.edit');
 });
 
+// Gestion de Pacientes
+Route::middleware(['auth', 'can:pacientes'])->group(function () {
+    Volt::route('pacientes', 'pacientes.index')->name('pacientes.index');
+    Volt::route('pacientes/create', 'pacientes.create')->name('pacientes.create');
+    Volt::route('pacientes/store', 'pacientes.store')->name('pacientes.store');
+    Volt::route('pacientes/{paciente}/edit', 'pacientes.edit')->name('pacientes.edit');
+});
+
 
 require __DIR__.'/auth.php';

@@ -16,6 +16,11 @@
                 </flux:navmenu>
             </flux:dropdown>
 
+            {{-- Pacientes --}}
+            <flux:navbar.item icon="user-group" href="{{ route('pacientes.index') }}" label="Pacientes"
+                badge="{{ \App\Models\Paciente::count() }}" title="Gestion de pacientes Registrados">Pacientes
+            </flux:navbar.item>
+
             {{-- Especialistas --}}
             <flux:navbar.item icon="user-group" href="{{ route('especialistas.index') }}" label="Especialistas"
                 badge="{{ \App\Models\Especialista::count() }}" title="Gestion de especialistas Registrados">Especialistas
