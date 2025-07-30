@@ -10,13 +10,20 @@ new class extends Component {
     public function with(): array
     {
         return [
-            'especialistas' => Especialista::buscar($this->search)->where('estado', 'Activo')->orderBy('id', 'desc')->paginate(7),
+            'especialistas' => Especialista::buscar($this->search)->where('estado', 'activo')
+            ->orderBy('id', 'desc')->paginate(7),
         ];
     }
 
     public function disable($especialistaId)
     {
-        Especialista::where('id', $especialistaId)->update(['estado' => 'Inactivo']);
+        $especialista = Especialista::find($especialistaId);
+
+        if ($especialista->estado === 'inactivo') {
+            return redirect()->route('especialistas.index')->with('danger', 'Este especialista ya estaba inactivo.');
+        }
+
+        Especialista::where('id', $especialistaId)->update(['estado' => 'inactivo']);
 
         return redirect()->route('especialistas.index')->with('success', 'Especialistas desactivado');
     }
@@ -56,75 +63,46 @@ new class extends Component {
         </div>
     @else
         <div class="w-full mt-4 overflow-x-auto">
-            <x-table>
-                <x-slot name="thead">
-                    <tr>
-                        {{-- <th class="px-6 py-3 text-left">ID</th> --}}
-                        <th class="px-6 py-3 text-left">Nombres & Apellidos</th>
-                        <th class="px-6 py-3 text-left">Tipo & Numero Documento</th>
-                        <th class="px-6 py-3 text-left">Genero</th>
-                        {{-- <th class="px-6 py-3 text-left">Fecha de Nacimiento</th> --}}
-                        {{-- <th class="px-6 py-3 text-left">Fotografía</th> --}}
-                        {{-- <th class="px-6 py-3 text-left">Dirección de Residencia</th> --}}
-                        <th class="px-6 py-3 text-left">Telefono Contacto</th>
-                        {{-- <th class="px-6 py-3 text-left">Telefono Contacto 2</th> --}}
-                        <th class="px-6 py-3 text-left">Correo Electronico</th>
-                        <th class="px-6 py-3 text-left">Especialidad médica</th>
-                        {{-- <th class="px-6 py-3 text-left">Registro Médico</th> --}}
-                        <th class="px-6 py-3 text-left">Fecha Inicio labor</th>
-                        {{-- <th class="px-6 py-3 text-left">Experiencia Laboral</th> --}}
-                        {{-- <th class="px-6 py-3 text-left">Certificaciones </th> --}}
-                        <th class="px-6 py-3 text-left">Estado </th>
-                        <th class="px-6 py-3 text-center">Acciones</th>
-                    </tr>
-                </x-slot>
-
-                @foreach ($especialistas as $especialista)
-                    <tr class="hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">
-                        {{-- <td class="px-6 py-3">{{ $especialista->id }}</td> --}}
-                        <td class="px-6 py-3 text-left">{{ $especialista->nombres . ' ' . $especialista->apellidos }}
-                        </td>
-                        <td class="px-6 py-3 text-left">
-                            {{ $especialista->tipo_identificacion . ' # ' . $especialista->numero_identificacion }}</td>
-                        <td class="px-6 py-3 text-left">{{ $especialista->genero }}</td>
-                        {{-- <td>{{ $especialista->fecha_de_nacimiento }}</td>
-                        <td>{{ Str::limit($especialista->path_fotografia, 20) }}</td>
-                        <td>{{ Str::limit($especialista->direccion_residencia, 20) }}</td> --}}
-                        <td class="px-6 py-3 text-left">{{ $especialista->telefono_contacto1 }}</td>
-                        {{-- <td class="px-6 py-3 text-left">{{ $especialista->telefono_contacto2 }}</td> --}}
-                        <td class="px-6 py-3 text-left">{{ $especialista->email }}</td>
-                        <td class="px-6 py-3 text-left">{{ $especialista->especialidad_medica }}</td>
-                        {{-- <td>{{ $especialista->registro_medico }}</td> --}}
-                        <td class="px-6 py-3 text-left">{{ $especialista->fecha_inicio_labor }}</td>
-                        {{-- <td>{{ Str::limit($especialista->experiencia, 20) }}</td> --}}
-                        {{-- <td>{{ Str::limit($especialista->certificaciones, 20) }}</td> --}}
-                        <td class="px-6 py-3 text-left">
-                            <button wire:click="$dispatch('confirmespecialista', {{ $especialista->id }})"
-                                class="cursor-pointer inline-block px-3 py-1.5 bg-green-900 text-white rounded-md hover:bg-red-600 transition"
-                                title="Desactivar">
-                                {{ $especialista->estado }}
-                            </button>
-                        </td>
-                        <td class="px-6 py-3 text-center">
-                            <a href="{{ route('especialistas.edit', $especialista->id) }}"
-                                class="inline-block px-3 py-1.5 bg-amber-600 text-white rounded-md hover:bg-amber-900 transition">
-                                Editar
-                            </a>
-                        </td>
-                    </tr>
-                @endforeach
-            </x-table>
-
-            <div class="mt-4">
-                {{ $especialistas->links() }}
-            </div>
-        </div>
+            <x-table :items="$especialistas" :columns="[
+                'Nombres & Apellidos',
+                'Tipo & Numero Documento',
+                'Genero',
+                // 'Fecha de Nacimiento',
+                // 'Fotografía',
+                // 'Dirección de Residencia',
+                'Telefono Contacto',
+                // 'Telefono Contacto 2',
+                'Correo Electronico',
+                'Especialidad médica',
+                // 'Registro Médico',
+                // 'Fecha Inicio labor',
+                // 'Experiencia Laboral',
+                // 'Certificaciones',
+                // 'Estado',
+            ]" :fields="[
+                fn($p) => $p->nombres . ' ' . $p->apellidos,
+                fn($p) => $p->tipo_identificacion . ' # ' . $p->numero_identificacion,
+                'genero',
+                // 'fecha_de_nacimiento',
+                // 'path_fotografia',
+                // 'direccion_residencia',
+                'telefono_contacto1',
+                // 'telefono_contacto2',
+                'email',
+                'especialidad_medica',
+                // 'registro_medico',
+                // 'fecha_inicio_labor',
+                // 'experiencia',
+                // 'certificaciones',
+                // 'estado',
+            ]" :hasActions="true"
+                editRoute="especialistas.edit" />
     @endif
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             if (typeof Livewire !== 'undefined') {
-                Livewire.on('confirmespecialista', function(especialistaId) {
+                Livewire.on('confirmdesactivar', function(especialistaId) {
                     Swal.fire({
                         title: "¿Estás seguro que deseas desactivar al Especialista?",
                         icon: "warning",
@@ -139,8 +117,6 @@ new class extends Component {
                         }
                     });
                 });
-            } else {
-                console.warn('Livewire no está definido aún. Script de confirmación omitido.');
             }
         });
     </script>

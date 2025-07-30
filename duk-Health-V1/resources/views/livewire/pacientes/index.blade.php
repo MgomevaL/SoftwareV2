@@ -55,13 +55,59 @@ new class extends Component {
         </div>
     @else
         <div class="w-full mt-4 overflow-x-auto">
-
-            <x-table :columns="['Nombre', 'Documento', 'Correo', 'Teléfono']" />
-
-            <div class="mt-4">
-                {{ $pacientes->links() }}
-            </div>
-        </div>
+            <x-table :items="$pacientes" :columns="[
+                'nombres y apellidos',
+                'tipo & numero identificacion',
+                'genero',
+                'fecha de nacimiento',
+                'tipo & factor rh',
+                'grupo etnico',
+                'nivel estudio',
+                'estado civil',
+                'path fotografia',
+                'departamento residencia',
+                'ciudad residencia',
+                'direccion residencia',
+                'estrato',
+                'zona residencial',
+                'comuna',
+                'telefono',
+                'email',
+                'eps',
+                'arl',
+                'afp',
+                'cargo a desempeñar',
+                'acompañante',
+                'Firma',
+                'estado',
+                'observaciones',
+            ]" :fields="[
+                fn($p) => $p->nombres . ' ' . $p->apellidos,
+                fn($p) => $p->tipo_identificacion . ' - ' . $p->numero_identificacion,
+                'genero',
+                'fecha_de_nacimiento',
+                fn($p) => $p->tipo_sangre . ' ' .$p->factor_rh,
+                'grupo_etnico',
+                'nivel_estudio',
+                'estado_civil',
+                'path_fotografia',
+                'departamento_residencia',
+                'ciudad_residencia',
+                'direccion_residencia',
+                'estrato',
+                'zona_residencial',
+                'comuna',
+                'telefono',
+                'email',
+                'eps',
+                'arl',
+                'afp',
+                'cargo_a_desempeñar',
+                'acompañante',
+                'path_firma',
+                'estado',
+                'observaciones',
+            ]" />
     @endif
 
     <script>

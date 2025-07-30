@@ -69,57 +69,22 @@ new class extends Component {
         </div>
     @else
         <div class="w-full mt-4 overflow-x-auto">
-            <x-table>
-                <x-slot name="thead">
-                    <tr>
-                        {{-- <th class="px-6 py-3 text-left">ID</th> --}}
-                        <th class="px-6 py-3 text-left">Nombre</th>
-                        <th class="px-6 py-3 text-left">Correo</th>
-                        <th class="px-6 py-3 text-left">Contacto</th>
-                        <th class="px-6 py-3 text-left">Cargo</th>
-                        <th class="px-6 py-3 text-left">Rol</th>
-                        <th class="px-6 py-3 text-left">Estado</th>
-                        <th class="px-6 py-3 text-center">Acciones</th>
-                    </tr>
-                </x-slot>
-
-                @foreach ($users as $user)
-                    <tr class="hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">
-                        {{-- <td class="px-6 py-3">{{ $user->id }}</td> --}}
-                        <td class="px-6 py-3 font-medium">{{ $user->nombres }} {{ $user->apellidos }}</td>
-                        <td class="px-6 py-3">{{ $user->email }}</td>
-                        <td class="px-6 py-3">{{ $user->telefono }}</td>
-                        <td class="px-6 py-3">{{ $user->cargo }}</td>
-                        <td class="px-6 py-3">
-                            @if ($user->roles->count())
-                                @foreach ($user->roles as $role)
-                                    {{ $role->name }}
-                                @endforeach
-                            @else
-                                <p>Sin Rol Asignado</p>
-                            @endif
-                        </td>
-                        <td class="px-6 py-3 text-left">
-                            <button wire:click="$dispatch('confirmUser', {{ $user->id }})"
-                                class="cursor-pointer inline-block px-3 py-1.5 bg-green-900 text-white rounded-md hover:bg-red-600 transition"
-                                title="Desactivar">
-                                {{ $user->estado }}
-                            </button>
-                        </td>
-
-                        <td class="px-6 py-3 text-center">
-                            <a href="{{ route('usuarios.edit', $user->id) }}"
-                                class="inline-block px-3 py-1.5 bg-amber-600 text-white rounded-md hover:bg-amber-900 transition">
-                                Editar
-                            </a>
-                        </td>
-                    </tr>
-                @endforeach
-            </x-table>
-
-            <div class="mt-4">
-                {{ $users->links() }}
-            </div>
+            <x-table :items="$users" :columns="[
+                'Nombres & Apellidos',
+                'Correo',
+                'Contacto',
+                'Cargo',
+                'Rol',
+                // 'Estado'
+                ]" :fields="[
+                fn($p) => $p->nombres . ' ' . $p->apellidos,
+                'email',
+                'telefono',
+                'cargo',
+                'role' => fn($user) => $user->roles->pluck('name')->join(', ') ?: 'Sin Rol Asignado',
+                // 'estado',
+            ]" :hasActions="true"
+                editRoute="usuarios.edit" />
         </div>
     @endif
 
@@ -128,7 +93,7 @@ new class extends Component {
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 if (typeof Livewire !== 'undefined') {
-                    Livewire.on('confirmUser', function(userId) {
+                    Livewire.on('confirmdesactivar', function(userId) {
                         Swal.fire({
                             title: "¿Estás seguro que deseas desactivar al usuario?",
                             icon: "warning",
@@ -148,6 +113,5 @@ new class extends Component {
                 }
             });
         </script>
-
     </div>
 </div>

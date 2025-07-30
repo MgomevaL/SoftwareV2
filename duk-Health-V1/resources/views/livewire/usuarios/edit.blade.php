@@ -87,8 +87,8 @@ new class extends Component {
         </div>
 
         <div class="mt-6 flex justify-between">
-            <x-button type="submit" variant="primary">Actualizar Usuario</x-button>
-            <x-button href="{{ route('usuarios.index') }}" variant="secondary">Regresar</x-button>
+            <x-action-button variant="warning" label="Actualizar Usuario" />
+            <x-action-button href="{{ route('usuarios.index') }}" variant="success" label="Regresar" />
         </div>
     </form>
 </div>
