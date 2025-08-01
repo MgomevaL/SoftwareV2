@@ -4,12 +4,9 @@ use Livewire\Volt\Component;
 use App\Models\Especialista;
 
 new class extends Component {
-
     public $especialista;
-    public $nombres, $apellidos, $tipo_identificacion, $numero_identificacion, $genero,
-        $fecha_de_nacimiento, $direccion_residencia, $telefono_contacto1, $telefono_contacto2,
-        $email, $especialidad_medica, $registro_medico, $fecha_inicio_labor, $experiencia,
-        $certificaciones, $estado;
+    
+    public $nombres, $apellidos, $tipo_identificacion, $numero_identificacion, $genero, $fecha_de_nacimiento, $direccion_residencia, $telefono_contacto1, $telefono_contacto2, $email, $especialidad_medica, $registro_medico, $fecha_inicio_labor, $experiencia, $certificaciones, $estado;
 
     public function mount(Especialista $especialista)
     {
@@ -55,39 +52,24 @@ new class extends Component {
 
         return redirect()->route('especialistas.index')->with('success', 'Especialista actualizado correctamente.');
     }
-
 }; ?>
-
-<div class="w-full mx-auto p-6 bg-white dark:bg-zinc-900 rounded-lg shadow-lg space-y-6">
-    <h2 class="text-2xl font-bold text-center text-zinc-800 dark:text-white">Editar Especialista</h2>
-    <hr class="border-gray-300 dark:border-zinc-700">
-
-    <form wire:submit.prevent="actualizarEspecialista">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <x-input-field name="nombres" label="Nombres" model="nombres" />
-            <x-input-field name="apellidos" label="Apellidos" model="apellidos" />
-            <x-input-field name="tipo_identificacion" label="Tipo de Identificación" model="tipo_identificacion" />
-            <x-input-field name="numero_identificacion" label="Número de Identificación"
-                model="numero_identificacion" />
-            <x-input-field name="genero" label="Género" model="genero" />
-            <x-input-field name="fecha_de_nacimiento" label="Fecha de Nacimiento" type="date"
-                model="fecha_de_nacimiento" />
-            <x-input-field name="direccion_residencia" label="Dirección" model="direccion_residencia" />
-            <x-input-field name="telefono_contacto1" label="Teléfono 1" model="telefono_contacto1" />
-            <x-input-field name="telefono_contacto2" label="Teléfono 2" model="telefono_contacto2" />
-            <x-input-field name="email" label="Email" type="email" model="email" />
-            <x-input-field name="especialidad_medica" label="Especialidad Médica" model="especialidad_medica" />
-            <x-input-field name="registro_medico" label="Registro Médico" model="registro_medico" />
-            <x-input-field name="fecha_inicio_labor" label="Fecha de Inicio" type="date"
-                model="fecha_inicio_labor" />
-            <x-input-field name="experiencia" label="Experiencia" model="experiencia" />
-            <x-input-field name="certificaciones" label="Certificaciones" model="certificaciones" />
-            <x-input-field name="estado" label="Estado" model="estado" readonly />
-        </div>
-
-        <div class="mt-6 flex justify-between">
-            <x-action-button type="submit" variant="warning" label="Actualizar Especialista"/>
-            <x-action-button href="{{ route('especialistas.index') }}" variant="success" label="Regresar"/>
-        </div>
-    </form>
+<div>
+    <x-form-edit :model="$especialista" submitAction="actualizarEspecialista" :fields="[
+        ['name' => 'nombres', 'label' => 'Nombres'],
+        ['name' => 'apellidos', 'label' => 'Apellidos'],
+        ['name' => 'tipo_identificacion', 'label' => 'Tipo de Identificación'],
+        ['name' => 'numero_identificacion', 'label' => 'Número de Identificación'],
+        ['name' => 'genero', 'label' => 'Género'],
+        ['name' => 'fecha_de_nacimiento', 'label' => 'Fecha de Nacimiento', 'type' => 'date'],
+        ['name' => 'direccion_residencia', 'label' => 'Dirección'],
+        ['name' => 'telefono_contacto1', 'label' => 'Teléfono 1'],
+        ['name' => 'telefono_contacto2', 'label' => 'Teléfono 2'],
+        ['name' => 'email', 'label' => 'Email', 'type' => 'email'],
+        ['name' => 'especialidad_medica', 'label' => 'Especialidad Médica'],
+        ['name' => 'registro_medico', 'label' => 'Registro Médico'],
+        ['name' => 'fecha_inicio_labor', 'label' => 'Fecha de Inicio', 'type' => 'date'],
+        ['name' => 'experiencia', 'label' => 'Experiencia'],
+        ['name' => 'certificaciones', 'label' => 'Certificaciones'],
+        ['name' => 'estado', 'label' => 'Estado', 'readonly' => true],
+    ]" />
 </div>

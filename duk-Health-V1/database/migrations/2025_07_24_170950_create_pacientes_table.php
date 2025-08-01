@@ -36,9 +36,9 @@ return new class extends Migration
             $table->enum('eps',['Famisanar', 'Sanitas', 'Sura', 'Coomeva', 'Compensar','Aliansalud','Salud Total',' Nueva EPS', 'Medimás', 'Cruz Blanca', 'No tiene', 'No recuerda' ]);
             $table->enum('arl',['Positiva', 'Colmena', 'Liberty', 'Bolívar', 'Suramericana','MAPFRE', 'No tiene', 'No recuerda']);
             $table->enum('afp',['Porvenir', 'Protección', 'Colfondos', 'Skandia', 'No tiene', 'No recuerda']);
-            $table->string('acompañante', 255)->nullable();
+            $table->string('acompanante', 255)->nullable();
             $table->string('path_firma', 2048)->nullable();
-            $table->string('cargo_a_desempeñar', 255)->nullable();
+            $table->string('cargo_a_desempenar', 255)->nullable();
             $table->enum('estado', ['activo', 'inactivo'])->default('activo');
             $table->timestamps();
         });

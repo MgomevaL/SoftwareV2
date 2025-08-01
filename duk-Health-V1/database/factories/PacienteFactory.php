@@ -40,8 +40,8 @@ class PacienteFactory extends Factory
             'eps' => $this->faker->randomElement(['Famisanar', 'Sanitas', 'Sura', 'Coomeva', 'Compensar', 'Aliansalud', 'Salud Total', ' Nueva EPS', 'Medimás', 'Cruz Blanca', 'No tiene', 'No recuerda' ]),
             'arl' => $this->faker->randomElement(['Positiva', 'Colmena', 'Liberty', 'Bolívar', 'Suramericana', 'MAPFRE', 'No tiene', 'No recuerda']),
             'afp' => $this->faker->randomElement(['Porvenir', 'Protección', 'Colfondos', 'Skandia', 'No tiene', 'No recuerda']),
-            'acompañante' => $this->faker->firstName,
-            'cargo_a_desempeñar' => $this->faker->jobTitle(),
+            'acompanante' => $this->faker->firstName,
+            'cargo_a_desempenar' => $this->faker->jobTitle(),
             'path_firma' => '',
             'estado' => 'activo',
         ];

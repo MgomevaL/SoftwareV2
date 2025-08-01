@@ -10,8 +10,7 @@ new class extends Component {
     public function with(): array
     {
         return [
-            'especialistas' => Especialista::buscar($this->search)->where('estado', 'activo')
-            ->orderBy('id', 'desc')->paginate(7),
+            'especialistas' => Especialista::buscar($this->search)->where('estado', 'activo')->orderBy('id', 'desc')->paginate(7),
         ];
     }
 
@@ -28,7 +27,6 @@ new class extends Component {
         return redirect()->route('especialistas.index')->with('success', 'Especialistas desactivado');
     }
 }; ?>
-
 
 <div class="px-4 sm:px-6 lg:px-8">
     <x-slot name="header">
